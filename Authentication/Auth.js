@@ -9,7 +9,7 @@ passport.use(new localStrategy(
             if(!user){
                 return done(null,false,{msg:"Input correct username"});
             }
-            const isPasswordMatch=user.password===password ?true:false;
+            const isPasswordMatch=user.comparePassword(password);
             if(isPasswordMatch){
                 return done(null,user)
             }else{
