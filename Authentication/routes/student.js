@@ -12,7 +12,7 @@ router.get('/',async(req,res)=>{
         res.status(400).json({msg:"Internal server error"})
     }
 })
-router.post("/",async(req,res)=>{
+router.post("/signup",async(req,res)=>{
     try {
         const data=req.body;
     const newStudent= new StudentSchema(data);

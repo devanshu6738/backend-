@@ -1,10 +1,11 @@
 const express=require("express");
 const app=express();
-const PORT=3000;
+const PORT=process.env.PORT;
 const db=require("./connect")
 const router=require("./routes/student");
 const passport=require("passport")
 const AuthStudent=require('./Auth')
+require('dotenv').config();
 app.use(express.json());
 app.use(passport.initialize());
 
