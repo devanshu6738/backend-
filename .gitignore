@@ -2,3 +2,5 @@
 /Middleware/node_modules
 /mongoose/node_modules
 /models/node_modules
+/TodoApp/node_modules
+/blog app/node_modules
