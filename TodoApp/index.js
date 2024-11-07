@@ -1,44 +1,17 @@
 const express=require("express")
 const app=express();
+const fs=require("fs");
 
 app.use(express.json())
 
-let todos=[
-    {
-        "title":"t1",
-        "description":"d1",
-        "id":1,
-    },
-    {
-        "title":"t2",
-        "description":"d2",
-        "id":2,
-    },
-    {
-        "title":"t3",
-        "description":"d3",
-        "id":3,
-    },
-    {
-        "title":"t4",
-        "description":"d4",
-        "id":4,
-    },
-    {
-        "title":"t5",
-        "description":"d5",
-        "id":5,
-    },
-    {
-        "title":"t6",
-        "description":"d6",
-        "id":6,
-    },
-]
+let todos=[]
 
 app.get('/todos',(req,res)=>{
    try {
-    return res.status(200).json({todos})
+    fs.readFile(__dirname+"/todo.json",{encoding:"utf-8"},(err,data)=>{
+        return res.status(200).json({todo:JSON.parse(data)})
+    })
+   
    } catch (error) {
     console.log(error)
     res.status(500).json({msg:"Internal Server error"})
@@ -72,9 +45,11 @@ app.delete('/todos/:id',(req,res)=>{
        }
 })
 
-app.delete('/todos/:id',(req,res)=>{
+app.put('/todos/:id',(req,res)=>{
     try {
-        
+        const index=todos.findIndex(todos=>todos.id==req.params.id);
+        todos[index]={...todos[index],...req.body};
+        console.log(index);
         return res.status(200).json({msg:"todo Updated"})
        } catch (error) {
         console.log(error)
