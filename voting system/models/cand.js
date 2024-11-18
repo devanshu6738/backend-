@@ -23,7 +23,7 @@ const candSchema=new mongoose.Schema({
     },
     vote:{
         type:Number,
-        required:true,
+        default:0,
     }
 })
 const candmodel=mongoose.model('candData',candSchema);

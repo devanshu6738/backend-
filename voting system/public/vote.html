@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Voting Results</title>
+  <style>
+    /* General Styles */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: #333;
+    }
+
+    .container {
+      text-align: center;
+      background-color: white;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      width: 80%;
+      max-width: 600px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      color: #3a3a3a;
+    }
+
+    #results {
+      margin-top: 20px;
+    }
+
+    .candidate {
+      background-color: #e9e9e9;
+      padding: 15px;
+      border-radius: 6px;
+      margin: 10px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background-color 0.3s;
+    }
+
+    .candidate:hover {
+      background-color: #d1d1d1;
+    }
+
+    .name {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    .count {
+      font-size: 1.1rem;
+      color: #4CAF50;
+    }
+    </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Live Voting Results</h1>
+    <div id="results"></div>
+  </div>
+  <script>
+    
+  async function loadresult() {
+    try {
+      let data = await fetch("http://localhost:3000/vote/result");
+      let result = await data.json();
+
+      const resultsDiv = document.getElementById('results');
+      resultsDiv.innerHTML = ''; 
+
+  
+      result.forEach(candi => {
+        const candidateDiv = document.createElement('div');
+        candidateDiv.classList.add('candidate');
+        candidateDiv.innerHTML = `
+          <span class="name">${candi.party}</span>
+          <span class="count">${candi.vote} votes</span>
+        `;
+        resultsDiv.appendChild(candidateDiv);
+      });
+    } catch (error) {
+      console.error("Error fetching voting results:", error);
+    }
+  }
+
+  loadresult();
+</script>
+
+</body>
+</html>

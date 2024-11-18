@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="main" id="main">
+
+    </div>
+    <script>
+        async function giveVote(){
+            let data = await fetch("http://localhost:3000/vote/result");
+            let result = await data.json();
+            const main=document.getElementById("main")
+            for(let i=0;i<result.length;i++){
+                const newDiv=document.createElement('div');
+        newDiv.setAttribute('class','div1');
+        newDiv.innerHTML=`
+        <button  data-party="${result[i].party}">${result[i].party}</button>
+        `
+        newDiv.querySelector("button").addEventListener('click',async(e)=>{
+            e.preventDefault();
+            const data=await fetch(`http://localhost:3000/vote/${result[i].party}`)
+            const res=await data.json();
+            if(res.msg==="voted successfully"){
+                alert("you voted successfully")
+            }
+        })
+        main.appendChild(newDiv)
+            }
+        }
+        giveVote()
+    </script>
+</body>
+</html>
