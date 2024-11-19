@@ -14,8 +14,8 @@ async function createAcc(req,res) {
 }
 async function createCand(req,res) {
     try {
-        const {name,phone,proof,password,party}=req.body
-        let data=await cand.create({name,phone,proof,password,party});
+        const {name,phone,proof,party}=req.body
+        let data=await cand.create({name,phone,proof,party});
         return res.status(200).json({msg:"Canditate Registered Successfully"})
     } catch (error) {
         console.log(error)
@@ -36,7 +36,7 @@ async function loginVote(req,res){
     const data=await user.findOne({phone})
     if(data){
         if(data.password===password){
-            return res.status(200).json({msg:"login successfully"})
+            return res.redirect(`/vote/result`)
         }else{
             return res.status(500).json({msg:"please enter a true password"})
         }

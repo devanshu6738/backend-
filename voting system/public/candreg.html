@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register Candidate</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      color: #333;
+    }
+
+    .container {
+      background-color: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 400px;
+      max-width: 100%;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    label {
+      font-size: 16px;
+      margin-bottom: 5px;
+      display: block;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0 20px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+
+    input:focus {
+      border-color: #5cb85c;
+      outline: none;
+    }
+
+    button {
+      background-color: #5cb85c;
+      color: white;
+      border: none;
+      padding: 12px;
+      font-size: 16px;
+      width: 100%;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #4cae4c;
+    }
+
+    .form-footer {
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .form-footer a {
+      color: #5cb85c;
+      text-decoration: none;
+    }
+
+    .form-footer a:hover {
+      text-decoration: underline;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <form id="candidateForm">
+      <label for="name">Candidate Name:</label>
+      <input type="text" id="name" name="name" required>
+      
+      <label for="party">Party Name:</label>
+      <input type="text" id="party" name="party" required>
+
+      <label for="phone">Candidate Phone:</label>
+      <input type="text" id="phone" name="phone" required>
+
+      <label for="proof">Proof ID:</label>
+      <input type="text" id="proof" name="proof" required>
+
+      <button type="submit">Register Candidate</button>
+    </form>
+
+  </div>
+
+  <script>
+    document.getElementById('candidateForm').addEventListener('submit', async function(event) {
+      event.preventDefault(); 
+
+      const name = document.getElementById('name').value;
+      const party = document.getElementById('party').value;
+      const phone = document.getElementById('phone').value;
+      const proof = document.getElementById('proof').value;
+
+      try {
+
+        const response = await fetch('http://localhost:3000/vote/cand', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name,
+            party,
+            phone,
+            proof
+          })
+        });
+
+        const result = await response.json();
+        console.log(result)
+      } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred while registering the candidate.');
+      }
+    });
+  </script>
+
+</body>
+</html>

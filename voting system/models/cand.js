@@ -13,10 +13,6 @@ const candSchema=new mongoose.Schema({
         type:String,
         required:true,
     },
-    password:{
-        type:String,
-        required:true,
-    },
     party:{
         type:String,
         required:true,
